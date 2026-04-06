@@ -1,0 +1,276 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── CSS Variables ───────────────────────────────────── */
+:root {
+  /* Warm light palette — cottagecore / soft academia */
+  --bg:            #FAF7F2;
+  --surface:       #F4EEE5;
+  --hover:         #EDE4D7;
+  --card-bg:       #FFFFFF;
+  --border:        #E8DDD0;
+  --text:          #3B2F2F;
+  --text-muted:    #8B7265;
+  --primary:       #C17D74;      /* dusty rose */
+  --primary-dark:  #9E5E57;
+  --primary-light: #F5E0DB;
+  --sage:          #7A9E7E;
+  --terracotta:    #C4754A;
+  --cream:         #FAF7F2;
+}
+
+.dark {
+  --bg:            #1C1A17;
+  --surface:       #252219;
+  --hover:         #2E2B24;
+  --card-bg:       #2A271F;
+  --border:        #3D3830;
+  --text:          #F0EBE2;
+  --text-muted:    #9A8E82;
+  --primary:       #D4948B;
+  --primary-dark:  #E8B3AC;
+  --primary-light: #3D2B28;
+  --sage:          #8FB994;
+  --terracotta:    #D4855A;
+  --cream:         #1C1A17;
+}
+
+/* ── Global Reset ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Utility Classes ─────────────────────────────────── */
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+.font-body    { font-family: 'DM Sans', sans-serif; }
+
+.bg-bg-color      { background-color: var(--bg); }
+.bg-surface-color { background-color: var(--surface); }
+.bg-hover-color   { background-color: var(--hover); }
+.bg-card-color    { background-color: var(--card-bg); }
+.bg-primary-color { background-color: var(--primary); }
+.bg-primary-light { background-color: var(--primary-light); }
+
+.text-text-color   { color: var(--text); }
+.text-muted-color  { color: var(--text-muted); }
+.text-primary-color { color: var(--primary); }
+.text-primary-dark  { color: var(--primary-dark); }
+
+.border-border-color { border-color: var(--border); }
+.border-primary-light { border-color: var(--primary-light); }
+.border-primary-color { border-color: var(--primary); }
+
+/* ── Card ────────────────────────────────────────────── */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.hover-lift {
+  cursor: pointer;
+}
+
+.hover-lift:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(193,125,116,0.12);
+  transform: translateY(-2px);
+}
+
+/* ── Navbar / Sidebar ────────────────────────────────── */
+.navbar {
+  background-color: var(--card-bg);
+  border-color: var(--border);
+}
+
+.sidebar {
+  background-color: var(--card-bg);
+}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(193,125,116,0.3);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-muted);
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background-color: var(--hover);
+  color: var(--text);
+}
+
+/* ── Form Inputs ─────────────────────────────────────── */
+.input-field {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 0.625rem;
+  padding: 0.625rem 0.875rem;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(193,125,116,0.12);
+}
+
+.input-field::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+.label {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Progress Bar ────────────────────────────────────── */
+.progress-bar-bg {
+  background-color: var(--surface);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--primary-light) 0%, var(--primary) 50%, var(--terracotta) 100%);
+}
+
+/* ── Hero / Dashboard ────────────────────────────────── */
+.hero-gradient {
+  background: linear-gradient(135deg, #F5E0DB 0%, #EDE4D7 40%, #D9E8D3 100%);
+  position: relative;
+}
+
+.dark .hero-gradient {
+  background: linear-gradient(135deg, #3D2B28 0%, #2E2B24 40%, #1E2B1E 100%);
+}
+
+/* ── Topic Tags ──────────────────────────────────────── */
+.topic-tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+.dark .topic-tag {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+/* ── Floral Border ───────────────────────────────────── */
+.floral-border {
+  border: 1px dashed var(--border);
+  background-color: var(--surface);
+}
+
+/* ── Page Enter Animation ────────────────────────────── */
+.page-enter {
+  animation: fadeSlideIn 0.35s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Sage color overrides ────────────────────────────── */
+.bg-sage-100    { background-color: #d7e8d4; }
+.text-sage-700  { color: #3d6b41; }
+.text-sage-400  { color: var(--sage); }
+
+/* ── Scrollbar styling ───────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Select element ──────────────────────────────────── */
+select.input-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238B7265' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
+
+/* ── Textarea ────────────────────────────────────────── */
+textarea.input-field {
+  resize: vertical;
+  min-height: 4rem;
+}
+
+/* ── Timetable grid ──────────────────────────────────── */
+.timetable-slot {
+  border: 1px solid var(--border);
+  min-height: 2.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+/* ── Dark mode option for select ─────────────────────── */
+.dark option {
+  background-color: var(--card-bg);
+  color: var(--text);
+}

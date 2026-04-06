@@ -1,0 +1,79 @@
+Build a full-stack React + Vite web app called "StudyBloom" for college students. Use only React with hooks, Tailwind CSS (via CDN or config), and localStorage for all data persistence. Do NOT use any backend, database, or API keys. Split into clean components.
+
+## AESTHETIC
+Pinterest/cottagecore meets soft academia. Warm cream, dusty rose, sage green, and warm terracotta palette. Use Google Fonts: "Playfair Display" for headings, "DM Sans" for body. Soft watercolor-like backgrounds using CSS gradients. Rounded cards with subtle drop shadows. Floral/botanical SVG accents in corners. Light mode is warm cream (#FAF7F2 base), dark mode is deep charcoal with muted warm tones (#1C1A17 base). Smooth CSS transitions on all theme changes. No harsh whites or stark blacks.
+
+## FEATURES — build each as its own component file
+
+### 1. THEME TOGGLE (Navbar)
+- Sun/moon icon toggle button in top navbar
+- Persist dark/light preference in localStorage
+- All components must respond to theme change via CSS variables
+
+### 2. SEMESTER SYLLABUS UPLOADER
+- File upload UI (accept .pdf, .docx, .txt)
+- User can add subjects manually with: Subject Name, Semester, Exam Date, Topics (comma separated)
+- Display uploaded syllabi as cards grouped by semester
+- Delete option per subject card
+- Store in localStorage as JSON
+
+### 3. AI STUDY RESOURCES (Mock AI — no API key needed)
+- When a subject card is clicked, show a drawer/modal
+- Simulate AI by generating study resources based on subject name keywords using a pre-built JS mapping object (e.g., "Math" → Khan Academy, MIT OCW, Wolfram Alpha; "History" → Crash Course, JSTOR, etc.)
+- Show: Recommended websites, YouTube channels, books, study tips — all as clickable cards
+- Add a "Copy Study Plan" button that copies a text summary
+
+### 4. TO-DO LIST
+- Add tasks with: task name, subject (dropdown from added subjects), due date, priority (High/Medium/Low)
+- Filter by subject or priority
+- Check off tasks (strikethrough animation)
+- Progress bar showing % tasks completed
+- Store in localStorage
+
+### 5. STUDY TIMETABLE
+- Weekly grid (Mon–Sun, 7AM–10PM in 1-hour slots)
+- Click a slot to add: subject, topic, color tag
+- Drag to resize blocks (use mouse events, no external DnD library)
+- Export timetable as text summary
+- Store in localStorage
+
+### 6. POMODORO TIMER
+- Circular SVG countdown timer (aesthetic, not just a number)
+- Default: 25 min focus / 5 min break / 15 min long break
+- User can customize durations
+- Session counter (shows tomato 🍅 icons)
+- Play/pause/reset buttons
+- Soft bell sound on completion using Web Audio API (no external audio files)
+- Shows motivational quote on break
+
+### 7. MOOD TRACKER
+- Daily mood check-in with 5 emoji moods: 😴 Exhausted, 😟 Stressed, 😐 Neutral, 😊 Good, 🤩 Focused
+- Optional note per entry
+- Calendar heatmap view (color-coded by mood, last 30 days)
+- Weekly mood trend as a simple bar chart (pure CSS, no chart library)
+- Store in localStorage
+
+## LAYOUT
+- Left sidebar navigation with icons + labels: Dashboard, Syllabus, Resources, To-Do, Timetable, Pomodoro, Mood
+- Main content area with smooth fade-in page transitions
+- Dashboard (home) shows: today's tasks, current mood, pomodoro streak, upcoming exam dates
+- Mobile responsive with hamburger menu
+
+## TECHNICAL RULES (to avoid Bolt errors)
+- Use Vite + React (not Next.js)
+- No external UI libraries (no shadcn, no MUI, no Chakra)
+- Tailwind CSS only for utility classes — define custom colors in tailwind.config.js
+- No TypeScript — plain JavaScript only
+- No API calls, no .env files, no API keys anywhere
+- All data in localStorage
+- Split into at least these files: App.jsx, components/Navbar.jsx, components/Sidebar.jsx, pages/Dashboard.jsx, pages/Syllabus.jsx, pages/Resources.jsx, pages/TodoList.jsx, pages/Timetable.jsx, pages/Pomodoro.jsx, pages/MoodTracker.jsx, context/ThemeContext.jsx, context/DataContext.jsx
+- Use React Context for theme and shared data state
+- index.html must load Google Fonts in <head>
+
+## DECORATIVE DETAILS
+- Floating botanical SVG illustration in dashboard hero area
+- Soft animated gradient background on the dashboard
+- Card hover effects: lift + warm glow shadow
+- Progress bars with gradient fills
+- Emoji reactions on task completion
+- "Quote of the day" widget on dashboard (hardcoded array of 20 study motivation quotes, random pick per day)

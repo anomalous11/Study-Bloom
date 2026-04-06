@@ -4,6 +4,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { DataProvider } from "./context/DataContext";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Syllabus from "./pages/Syllabus";
 import Resources from "./pages/Resources";
@@ -12,7 +13,7 @@ import Timetable from "./pages/Timetable";
 import Pomodoro from "./pages/Pomodoro";
 import MoodTracker from "./pages/MoodTracker";
 
-function AppContent() {
+function AppContent({ username, onLogout }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [location, navigate] = useLocation();
   const [resourceSubject, setResourceSubject] = useState(null);
@@ -24,7 +25,11 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-bg-color text-text-color transition-colors duration-300">
-      <Navbar onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
+      <Navbar
+        onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+        username={username}
+        onLogout={onLogout}
+      />
       <div className="flex">
         <Sidebar
           currentPath={location}
@@ -55,11 +60,34 @@ function AppContent() {
 }
 
 export default function App() {
+  // Session-only login — cleared when the page is closed/refreshed
+  const [username, setUsername] = useState(() => {
+    return sessionStorage.getItem("studybloom-user") || null;
+  });
+
+  const handleLogin = (name) => {
+    sessionStorage.setItem("studybloom-user", name);
+    setUsername(name);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("studybloom-user");
+    setUsername(null);
+  };
+
+  if (!username) {
+    return (
+      <ThemeProvider>
+        <Login onLogin={handleLogin} />
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider>
-      <DataProvider>
+      <DataProvider username={username}>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <AppContent />
+          <AppContent username={username} onLogout={handleLogout} />
         </WouterRouter>
       </DataProvider>
     </ThemeProvider>

@@ -19,12 +19,15 @@ function useLocalStorage(key, defaultValue) {
   return [value, setValue];
 }
 
-export function DataProvider({ children }) {
-  const [subjects, setSubjects] = useLocalStorage("studybloom-subjects", []);
-  const [todos, setTodos] = useLocalStorage("studybloom-todos", []);
-  const [timetable, setTimetable] = useLocalStorage("studybloom-timetable", {});
-  const [moods, setMoods] = useLocalStorage("studybloom-moods", []);
-  const [pomodoroStats, setPomodoroStats] = useLocalStorage("studybloom-pomodoro", {
+export function DataProvider({ children, username }) {
+  // All keys are namespaced by username — each person gets their own data
+  const prefix = `studybloom-${username}`;
+
+  const [subjects, setSubjects] = useLocalStorage(`${prefix}-subjects`, []);
+  const [todos, setTodos] = useLocalStorage(`${prefix}-todos`, []);
+  const [timetable, setTimetable] = useLocalStorage(`${prefix}-timetable`, {});
+  const [moods, setMoods] = useLocalStorage(`${prefix}-moods`, []);
+  const [pomodoroStats, setPomodoroStats] = useLocalStorage(`${prefix}-pomodoro`, {
     sessionsToday: 0,
     totalSessions: 0,
     lastDate: null,
@@ -33,6 +36,7 @@ export function DataProvider({ children }) {
   return (
     <DataContext.Provider
       value={{
+        username,
         subjects, setSubjects,
         todos, setTodos,
         timetable, setTimetable,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useData } from "../context/DataContext";
 
 function SubjectCard({ subject, onDelete, onClick }) {
@@ -62,6 +62,7 @@ export default function Syllabus({ onSubjectClick }) {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ name: "", semester: "", examDate: "", topics: "" });
   const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef(null);
 
   const grouped = subjects.reduce((acc, s) => {
     const sem = s.semester || "Uncategorized";
@@ -90,23 +91,34 @@ export default function Syllabus({ onSubjectClick }) {
     setSubjects(subjects.filter((s) => s.id !== id));
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-    const files = Array.from(e.dataTransfer.files);
-    files.forEach((file) => {
+  const processFiles = (files) => {
+    const added = [];
+    Array.from(files).forEach((file) => {
       if (file.name.match(/\.(pdf|docx|txt)$/i)) {
-        const newSubject = {
+        added.push({
           id: Date.now().toString() + Math.random(),
           name: file.name.replace(/\.(pdf|docx|txt)$/i, ""),
           semester: "Current Semester",
           examDate: null,
           topics: [],
           createdAt: new Date().toISOString(),
-        };
-        setSubjects((prev) => [...prev, newSubject]);
+        });
       }
     });
+    if (added.length > 0) {
+      setSubjects((prev) => [...prev, ...added]);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    processFiles(e.dataTransfer.files);
+  };
+
+  const handleFileInput = (e) => {
+    processFiles(e.target.files);
+    e.target.value = "";
   };
 
   return (
@@ -179,13 +191,24 @@ export default function Syllabus({ onSubjectClick }) {
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
-        className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all duration-200 ${
-          dragOver ? "border-primary-color bg-primary-light/20" : "border-border-color bg-surface-color"
+        onClick={() => fileInputRef.current?.click()}
+        className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all duration-200 cursor-pointer ${
+          dragOver
+            ? "border-primary-color bg-primary-light/20"
+            : "border-border-color bg-surface-color hover:border-primary-color hover:bg-primary-light/10"
         }`}
       >
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".pdf,.docx,.txt"
+          multiple
+          className="hidden"
+          onChange={handleFileInput}
+        />
         <span className="text-3xl block mb-2">📄</span>
-        <p className="font-body text-sm text-muted-color">Drop syllabus files here (.pdf, .docx, .txt)</p>
-        <p className="text-xs text-muted-color mt-1">They'll be added as subjects automatically</p>
+        <p className="font-body text-sm text-text-color font-medium">Click to browse or drag files here</p>
+        <p className="text-xs text-muted-color mt-1">Accepts .pdf, .docx, .txt — added as subjects automatically</p>
       </div>
 
       {subjects.length === 0 ? (
